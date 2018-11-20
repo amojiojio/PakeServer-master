@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pk.server.app.mapper.ITakeByQuDao">
+
+    <select id="getTotalItemsCount" resultType="java.lang.Integer" parameterType="com.pk.server.app.model.TakeByQu">
+       select count(0) from (
+        select
+        id,
+        openId,
+        sms,
+        note,
+        endUserNote,
+        endUserName,
+        endPhone,
+        isSubscribe,
+        subscribeTime,
+        state,
+        createDate
+        from pake_takebyqu where 1=1
+        <if test="id!=null and id!=''">
+            and id like concat(concat("%",#{id}),"%")
+        </if>
+        <if test="endPhone!=null and endPhone!=''">
+            and endPhone like concat(concat("%",#{endPhone}),"%")
+        </if>
+        <if test="state!=null and state!=0">
+            and state = #{state}
+        </if>
+        ) as num
+    </select>
+    <select id="listForPageByPageEntity" resultType="com.pk.server.app.model.TakeByQu" parameterType="com.pk.server.app.model.TakeByQu">
+        select
+        id,
+        openId,
+        sms,
+        note,
+        endUserNote,
+        endUserName,
+        endPhone,
+        isSubscribe,
+        subscribeTime,
+        state,
+        payState,
+        transactionId,
+        messageTime,
+        createDate
+        from pake_takebyqu where 1=1
+        <if test="param1.id!=null and param1.id!=''">
+            and id like concat(concat("%",#{param1.id}),"%")
+        </if>
+        <if test="param1.endPhone!=null and param1.endPhone!=''">
+            and endPhone like concat(concat("%",#{param1.endPhone}),"%")
+        </if>
+        <if test="param1.state!=null and param1.state!=0">
+            and state = #{param1.state}
+        </if>
+        order by state, createDate desc
+        limit #{param2.startRow} , #{param2.pageSize}
+    </select>
+
+    <insert id="save" parameterType="com.pk.server.app.model.TakeByQu">
+        INSERT INTO pake_takebyqu (
+        id,
+        openId,
+        sms,
+        note,
+        endUserNote,
+        endUserName,
+        endPhone,
+        messageTime,
+        isSubscribe,
+        subscribeTime,
+        state,
+        createDate
+        )
+        VALUES (
+        #{id},
+        #{openId},
+        #{sms},
+        #{note},
+        #{endUserNote},
+        #{endUserName},
+        #{endPhone},
+        #{messageTime},
+        #{isSubscribe},
+        #{subscribeTime},
+        #{state},
+        now()
+        );
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from pake_takebyqu where id=#{id}
+    </delete>
+
+
+    <update id="update" parameterType="com.pk.server.app.model.TakeByQu" flushCache="true">
+        update pake_takebyqu
+        <trim prefix="set" suffixOverrides=",">
+            <if test="state!=null and state !=''">state=#{state},</if>
+            <if test="payState!=null and payState !=''">payState=#{payState},</if>
+            <if test="transactionId!=null">transactionId=#{transactionId},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <select id="getOne" parameterType="com.pk.server.app.model.TakeByQu" resultType="com.pk.server.app.model.TakeByQu">
+        select
+        id,
+        openId,
+        sms,
+        note,
+        endUserNote,
+        endUserName,
+        endPhone,
+        isSubscribe,
+        subscribeTime,
+        state,
+        payState,
+        transactionId,
+        messageTime,
+        createDate
+        from pake_takebyqu where 1=1
+        <if test="state!=null and state!=''"> and state=#{state}</if>
+        <if test="id!=null and id!=''"> and id=#{id}</if>
+    </select>
+
+    <select id="getHistoryAddressByEnd" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        endUserName,
+        endPhone,
+        endUserNote,
+        createDate
+        FROM
+        pake_run
+        WHERE
+        openId = #{openId}
+        UNION
+        SELECT
+        endUserName,
+        endPhone,
+        endUserNote,
+        createDate
+        FROM
+        pake_takebyqu
+        WHERE
+        openId = #{openId}
+        UNION
+        SELECT
+        endUserName,
+        endPhone,
+        endUserNote,
+        createDate
+        FROM
+        pake_takebysong
+        WHERE
+        openId = #{openId}
+        ) AS a
+        GROUP BY
+        a.endPhone
+        ORDER BY
+        a.createDate DESC
+        LIMIT 20
+    </select>
+
+    <select id="getHistoryAddressByStart" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        startUserNote
+        FROM
+        pake_takebyqu
+        WHERE
+        openId = #{openId}
+        and sendType=0
+        GROUP BY startUserNote
+        ORDER BY
+        createDate DESC
+        LIMIT 20
+    </select>
+
+</mapper>

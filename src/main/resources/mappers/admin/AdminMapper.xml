@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pk.server.admin.mapper.AdminDao">
+
+	<select id="index" resultType="java.util.Map">
+		SELECT
+		count(id) AS num
+		FROM
+		pake_run where state = 1
+		UNION ALL
+		SELECT
+		count(id) AS num
+		FROM
+		pake_takebyqu where state = 1
+		UNION ALL
+		SELECT
+		count(id) AS num
+		FROM
+		pake_takebysong where state = 1
+	</select>
+
+	<select id="one" resultType="java.util.Map">
+		SELECT
+		count(id) AS num
+		FROM
+		pake_run
+		UNION ALL
+		SELECT
+		count(id) AS num
+		FROM
+		pake_takebyqu
+		UNION ALL
+		SELECT
+		count(id) AS num
+		FROM
+		pake_takebysong
+	</select>
+
+	<select id="two" resultType="java.util.Map">
+		SELECT
+		DATE_FORMAT(createDate, "%Y-%m-%d") AS date,
+		count(id) AS num
+		FROM
+		pake_run
+		WHERE
+		DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(createDate)
+		GROUP BY
+		DATE_FORMAT(createDate, "%Y-%m-%d")
+	</select>
+
+	<select id="three" resultType="java.util.Map">
+		SELECT
+		DATE_FORMAT(createDate, "%Y-%m-%d") AS date,
+		count(id) AS num
+		FROM
+		pake_takebyqu
+		WHERE
+		DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(createDate)
+		GROUP BY
+		DATE_FORMAT(createDate, "%Y-%m-%d")
+	</select>
+
+	<select id="four" resultType="java.util.Map">
+		SELECT
+		DATE_FORMAT(createDate, "%Y-%m-%d") AS date,
+		count(id) AS num
+		FROM
+		pake_takebysong
+		WHERE
+		DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(createDate)
+		GROUP BY
+		DATE_FORMAT(createDate, "%Y-%m-%d")
+	</select>
+
+
+	<select id="getAdmin"  parameterType="com.pk.server.admin.model.Admin"  resultType="com.pk.server.admin.model.Admin">
+		select id,username,password, openId,nikename from pake_admin where username=#{userName} and password=#{passWord}
+	</select>
+
+</mapper>

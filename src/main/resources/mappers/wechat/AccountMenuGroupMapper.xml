@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pk.server.wechat.cms.mapper.AccountMenuGroupDao">
+
+
+    <select id="list" parameterType="com.pk.server.wechat.cms.domain.AccountMenuGroup"
+            resultType="com.pk.server.wechat.cms.domain.AccountMenuGroup">
+        SELECT * FROM t_wxcms_account_menu_group ORDER BY ID
+    </select>
+
+    <select id="getTotalItemsCount" parameterType="com.pk.server.wechat.cms.domain.AccountMenuGroup"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_wxcms_account_menu_group
+    </select>
+
+    <select id="getGid" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT
+        *
+        FROM
+        t_wxcms_account_menu_group
+        WHERE
+        `name` = #{gname}
+        limit
+        0,1
+    </select>
+
+    <select id="listForPage" resultType="com.pk.server.wechat.cms.domain.AccountMenuGroup">
+        SELECT * FROM t_wxcms_account_menu_group ORDER BY ID LIMIT #{param2.startRow} , #{param2.pageSize}
+    </select>
+
+    <select id="getById" parameterType="java.lang.String" resultType="com.pk.server.wechat.cms.domain.AccountMenuGroup">
+        SELECT * FROM t_wxcms_account_menu_group WHERE ID = #{id}
+    </select>
+
+    <insert id="add" parameterType="com.pk.server.wechat.cms.domain.AccountMenuGroup" flushCache="true"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_wxcms_account_menu_group ( NAME,ENABLE,ID,CREATETIME ) VALUES (
+        #{name},#{enable},#{id},#{createtime} )
+    </insert>
+
+    <update id="updateMenuGroupDisable" flushCache="true">
+        UPDATE t_wxcms_account_menu_group SET ENABLE = 0
+    </update>
+
+    <update id="updateMenuGroupEnable" parameterType="java.lang.String" flushCache="true">
+        UPDATE t_wxcms_account_menu_group SET ENABLE = 1 WHERE ID = #{id}
+    </update>
+
+    <update id="update" parameterType="com.pk.server.wechat.cms.domain.AccountMenuGroup" flushCache="true">
+        UPDATE t_wxcms_account_menu_group SET NAME = #{name},ENABLE = #{enable},CREATETIME = #{createtime} WHERE ID =
+        #{id}
+    </update>
+
+    <update id="updata" parameterType="com.pk.server.wechat.cms.domain.AccountMenuGroup" flushCache="true">
+
+        UPDATE t_wxcms_account_menu_group
+        SET NAME = #{name},ENABLE = #{enable},CREATETIME = #{createtime}
+        WHERE ID = #{id}
+
+    </update>
+
+    <delete id="deleteAllMenu" parameterType="com.pk.server.wechat.cms.domain.AccountMenuGroup">
+        DELETE FROM t_wxcms_account_menu WHERE GID = #{id}
+    </delete>
+
+    <delete id="delete" parameterType="com.pk.server.wechat.cms.domain.AccountMenuGroup">
+        DELETE FROM t_wxcms_account_menu_group WHERE ID = #{id}
+    </delete>
+
+</mapper>

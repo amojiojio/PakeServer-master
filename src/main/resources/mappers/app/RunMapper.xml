@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pk.server.app.mapper.IRunDao">
+
+    <select id="getTotalItemsCount" resultType="java.lang.Integer" parameterType="com.pk.server.app.model.Run">
+       select count(0) from (
+        select
+        id,
+        openId,
+        goodsType,
+        note,
+        startUserNote,
+        endUserNote,
+        endUserName,
+        endPhone,
+        goodsMoney,
+        sendType,
+        isSubscribe,
+        subscribeTime,
+        state,
+        payState,
+        createDate
+        from pake_run where 1=1
+        <if test="id!=null and id!=''">
+            and id like concat(concat("%",#{id}),"%")
+        </if>
+        <if test="endPhone!=null and endPhone!=''">
+            and endPhone like concat(concat("%",#{endPhone}),"%")
+        </if>
+        <if test="state!=null and state!=0">
+            and state = #{state}
+        </if>
+        ) as num
+    </select>
+    <select id="listForPageByPageEntity" resultType="com.pk.server.app.model.Run" parameterType="com.pk.server.app.model.Run">
+        select
+        id,
+        openId,
+        goodsType,
+        note,
+        startUserNote,
+        endUserNote,
+        endUserName,
+        endPhone,
+        goodsMoney,
+        sendType,
+        isSubscribe,
+        subscribeTime,
+        state,
+        payState,
+        createDate
+        from pake_run where 1=1
+        <if test="param1.id!=null and param1.id!=''">
+            and id like concat(concat("%",#{param1.id}),"%")
+        </if>
+        <if test="param1.endPhone!=null and param1.endPhone!=''">
+            and endPhone like concat(concat("%",#{param1.endPhone}),"%")
+        </if>
+        <if test="param1.state!=null and param1.state!=0">
+            and state = #{param1.state}
+        </if>
+        order by state, createDate desc
+        limit #{param2.startRow} , #{param2.pageSize}
+    </select>
+
+    <insert id="save" parameterType="com.pk.server.app.model.Run">
+        INSERT INTO pake_run (
+        id,
+        openId,
+        goodsType,
+        note,
+        startUserNote,
+        endUserNote,
+        endUserName,
+        endPhone,
+        goodsMoney,
+        sendType,
+        isSubscribe,
+        subscribeTime,
+        state,
+        payState,
+        createDate
+        )
+        VALUES (
+        #{id},
+        #{openId},
+        #{goodsType},
+        #{note},
+        #{startUserNote},
+        #{endUserNote},
+        #{endUserName},
+        #{endPhone},
+        #{goodsMoney},
+        #{sendType},
+        #{isSubscribe},
+        #{subscribeTime},
+        #{state},
+        #{payState},
+        now()
+        );
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from pake_run where id=#{id}
+    </delete>
+
+
+    <update id="update" parameterType="com.pk.server.app.model.Run" flushCache="true">
+        update pake_run
+        <trim prefix="set" suffixOverrides=",">
+            <if test="state!=null">state=#{state},</if>
+            <if test="payState!=null">payState=#{payState},</if>
+            <if test="transactionId!=null">transactionId=#{transactionId},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <select id="getOne" parameterType="com.pk.server.app.model.Run" resultType="com.pk.server.app.model.Run">
+        select
+        id,
+        openId,
+        goodsType,
+        note,
+        startUserNote,
+        endUserNote,
+        endUserName,
+        endPhone,
+        goodsMoney,
+        sendType,
+        isSubscribe,
+        subscribeTime,
+        state,
+        transactionId,
+        payState,
+        createDate
+        from pake_run where 1=1
+        <if test="state!=null and state!=''"> and state=#{state}</if>
+        <if test="id!=null and id!=''"> and id=#{id}</if>
+    </select>
+
+    <select id="getHistoryAddressByEnd" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        endUserName,
+        endPhone,
+        endUserNote,
+        createDate
+        FROM
+        pake_run
+        WHERE
+        openId = #{openId}
+        UNION
+        SELECT
+        endUserName,
+        endPhone,
+        endUserNote,
+        createDate
+        FROM
+        pake_takebyqu
+        WHERE
+        openId = #{openId}
+        UNION
+        SELECT
+        endUserName,
+        endPhone,
+        endUserNote,
+        createDate
+        FROM
+        pake_takebysong
+        WHERE
+        openId = #{openId}
+        ) AS a
+        GROUP BY
+        a.endPhone
+        ORDER BY
+        a.createDate DESC
+        LIMIT 20
+    </select>
+
+    <select id="getHistoryAddressByStart" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        startUserNote
+        FROM
+        pake_run
+        WHERE
+        openId = #{openId}
+        and sendType=0
+        GROUP BY startUserNote
+        ORDER BY
+        createDate DESC
+        LIMIT 20
+    </select>
+
+    <select id="getOrderByOpenId" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT * from (SELECT id,endUserName,endPhone,endUserNote,state,createDate FROM pake_run WHERE openId = #{openId}
+        UNION ALL
+        SELECT id,endUserName,endPhone,endUserNote,state,createDate FROM pake_takebyqu WHERE openId = #{openId}
+        UNION ALL
+        SELECT id,endUserName,endPhone,endUserNote,state,createDate FROM pake_takebysong WHERE openId = #{openId}) as a ORDER BY a.createDate DESC
+    </select>
+
+
+    <select id="num" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        count(0) as num
+        FROM
+        pake_run
+        WHERE
+        openId = #{openId}
+        UNION
+        SELECT
+        sum(
+        (
+        SELECT
+        count(0)
+        FROM
+        pake_takebyqu
+        WHERE
+        openId = #{openId}
+        ) + (
+        SELECT
+        count(0)
+        FROM
+        pake_takebysong
+        WHERE
+        openId = #{openId}
+        )
+        )
+    </select>
+
+</mapper>

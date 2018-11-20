@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:redis="http://www.springframework.org/schema/redis"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd      
+                        http://www.springframework.org/schema/context      
+                        http://www.springframework.org/schema/context/spring-context-4.2.xsd      
+                        http://www.springframework.org/schema/cache
+                        http://www.springframework.org/schema/cache/spring-cache-4.2.xsd  
+                        http://www.springframework.org/schema/redis 
+                        http://www.springframework.org/schema/redis/spring-redis-1.0.xsd">
+
+    <context:property-placeholder location="classpath:redis.properties"/>
+
+    <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
+    <cache:annotation-driven cache-manager="cacheManager"/>
+    <!-- redis 相关配置 -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 最大连接数 -->
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <!-- 最大空闲连接数 -->
+        <property name="maxTotal" value="${redis.maxActive}"/>
+        <!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->
+        <property name="maxWaitMillis" value="${redis.maxWait}"/>
+        <!-- 在获取连接的时候检查有效性, 默认false -->
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+        <!-- 在空闲时检查有效性, 默认false -->
+        <property name="testWhileIdle" value="true"/>
+    </bean>
+
+    <!-- 配置JedisConnectionFactory -->
+    <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="usePool" value="true"></property>
+        <property name="hostName" value="${redis.host}"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="password" value="${redis.pass}"/>
+        <property name="timeout" value="${redis.timeout}"/>
+        <constructor-arg index="0" ref="poolConfig"/>
+    </bean>
+
+    <!-- 配置RedisTemplate -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <!-- 注入连接工厂 -->
+        <property name="connectionFactory" ref="redisConnectionFactory"/>
+        <!-- 配置key序列化类 -->
+        <property name="keySerializer">
+            <bean
+                    class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <!-- 配置value序列化类 -->
+        <property name="valueSerializer">
+            <bean
+                    class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+        </property>
+    </bean>
+
+    <!-- 配置RedisCacheManager -->
+    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg name="redisOperations" ref="redisTemplate"/>
+        <property name="defaultExpiration" value="${redis.expiration}"/>
+    </bean>
+
+    <!-- spring自己的缓存管理器，这里定义了缓存位置名称 ，即注解中的value -->
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <!-- 这里可以配置多个redis -->
+                <!-- <bean class="com.xx.xx.RedisCache">    
+                     <property name="redisTemplate" ref="redisTemplate" />    
+                     <property name="name" value="default"/>    
+                </bean> -->
+                <bean class="com.pk.server.master.redis.RedisCache">
+                    <property name="redisTemplate" ref="redisTemplate"/>
+                    <!-- common名称要在类或方法的注解中使用 -->
+                    <property name="name" value="common"/>
+                    <!-- 默认过期时间 -->
+                    <property name="defaultExpiration" value="${redis.expiration}"/>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <!-- 配置监听器，redis在订阅消息时，会根据 redis:listener标签指定的方法名和通道（topic）调用不同的方法-->
+    <bean id="RedisMessageListener" class="com.pk.server.master.redis.RedisMessageListener"/>
+    <!-- 注册Redis消息订阅的监听器 -->
+    <redis:listener-container>
+        <!--  topic代表监听的通道，是一个正则匹配 -->
+        <redis:listener ref="RedisMessageListener" method="handleMessage" topic="redisMessage"/>
+    </redis:listener-container>
+
+</beans>    

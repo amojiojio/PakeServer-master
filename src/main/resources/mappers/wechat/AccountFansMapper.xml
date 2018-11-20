@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pk.server.wechat.cms.mapper.AccountFansDao">
+
+    <sql id="Base_Column_List">
+        openId,nickname,gender,language,country,province,city,headimgurl
+    </sql>
+
+    <select id="list" parameterType="com.pk.server.wechat.cms.domain.AccountFans"
+            resultType="com.pk.server.wechat.cms.domain.AccountFans">
+        SELECT openId FROM t_wxcms_account_fans where status =1
+    </select>
+
+    <select id="getTotalItemsCount" parameterType="com.pk.server.wechat.cms.domain.AccountFans"
+            resultType="java.lang.Integer">
+        SELECT count(id) FROM t_wxcms_account_fans
+    </select>
+
+    <select id="listForPage" resultType="com.pk.server.wechat.cms.domain.AccountFans">
+        select
+        <include refid="Base_Column_List"/>
+        from t_wxcms_account_fans where 1=1
+        limit #{param2.startRow} , #{param2.pageSize}
+    </select>
+
+    <select id="getLastOpenId" resultType="com.pk.server.wechat.cms.domain.AccountFans">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_wxcms_account_fans
+        ORDER BY ID DESC
+        LIMIT 0 , 1
+    </select>
+
+    <select id="getById" parameterType="java.lang.String" resultType="com.pk.server.wechat.cms.domain.AccountFans">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_wxcms_account_fans WHERE ID = #{id}
+    </select>
+
+
+    <select id="getByTokent" parameterType="java.lang.String" resultType="com.pk.server.wechat.cms.domain.AccountFans">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_wxcms_account_fans WHERE remark = #{tokent}
+    </select>
+
+
+    <select id="getByOpenId" parameterType="java.lang.String" resultType="com.pk.server.wechat.cms.domain.AccountFans">
+        select * FROM t_wxcms_account_fans
+        where openId= #{openId} limit 1
+    </select>
+
+    <insert id="add" parameterType="com.pk.server.wechat.cms.domain.AccountFans" flushCache="true"
+            useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+		INSERT INTO t_wxcms_account_fans ( OPENID,SUBSCRIBESTATUS,SUBSCRIBETIME,NICKNAME,GENDER,LANGUAGE,COUNTRY,PROVINCE,CITY,HEADIMGURL,REMARK,STATUS,ID,WXID,CREATETIME )  VALUES ( #{openId},#{subscribeStatus},#{subscribeTime},#{nickname},#{gender},#{language},#{country},#{province},#{city},#{headimgurl},#{remark},#{status},#{id},#{wxid},#{createtime} ) 
+		 ]]>
+    </insert>
+
+    <insert id="addList" parameterType="list">
+        INSERT INTO t_wxcms_account_fans (
+        OPENID,SUBSCRIBESTATUS,SUBSCRIBETIME,NICKNAME,GENDER,LANGUAGE,COUNTRY,PROVINCE,CITY,HEADIMGURL,REMARK,STATUS,ID,WXID,CREATETIME
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <![CDATA[
+            ( #{item.openId},#{item.subscribeStatus},#{item.subscribeTime},#{item.nickname},#{item.gender},#{item.language},#{item.country},#{item.province},#{item.city},#{item.headimgurl},#{item.remark},#{item.status},#{item.id},#{item.wxid},#{item.createtime} ) 
+        	 ]]>
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.pk.server.wechat.cms.domain.AccountFans" flushCache="true">
+        update t_wxcms_account_fans set
+        subscribeStatus=#{subscribeStatus},
+        subscribeTime=#{subscribeTime},
+        nickname=#{nickname},
+        wxid=#{wxid},
+        gender=#{gender},
+        language=#{language},
+        country=#{country},
+        province=#{province},
+        city=#{city},
+        headimgurl=#{headimgurl},
+        remark=#{remark},
+        status=#{status}
+        where openId = #{openId}
+    </update>
+
+    <delete id="delete" parameterType="com.pk.server.wechat.cms.domain.AccountFans">
+        DELETE FROM t_wxcms_account_fans WHERE ID = #{id}
+    </delete>
+
+    <delete id="deleteByOpenId" parameterType="java.lang.String">
+        DELETE FROM t_wxcms_account_fans WHERE OPENID = #{openId}
+    </delete>
+
+    <update id="updateToState" parameterType="java.lang.String" flushCache="true">
+        UPDATE t_wxcms_account_fans SET SUBSCRIBESTATUS=0 WHERE OPENID = #{openId}
+    </update>
+
+</mapper>

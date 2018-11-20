@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pk.server.wechat.cms.mapper.AccountMenuDao">
+
+    <select id="listParentMenu" parameterType="com.pk.server.wechat.cms.domain.AccountMenu"
+            resultType="com.pk.server.wechat.cms.domain.AccountMenu">
+        SELECT * FROM t_wxcms_account_menu where parentId = 0 and gid=#{gid} ORDER BY sort
+    </select>
+
+    <select id="list" parameterType="com.pk.server.wechat.cms.domain.AccountMenu"
+            resultType="com.pk.server.wechat.cms.domain.AccountMenu">
+        SELECT * FROM t_wxcms_account_menu
+        where gid = #{gid}
+        ORDER BY parentId, sort
+    </select>
+
+    <select id="getById" parameterType="java.lang.String" resultType="com.pk.server.wechat.cms.domain.AccountMenu">
+        SELECT * FROM t_wxcms_account_menu WHERE ID = #{id}
+    </select>
+
+    <insert id="add" parameterType="com.pk.server.wechat.cms.domain.AccountMenu" flushCache="true">
+        INSERT INTO t_wxcms_account_menu ( MTYPE,EVENTTYPE,NAME,INPUTCODE,URL,SORT,MSGID,PARENTID,GID,CREATETIME )
+        VALUES ( #{mtype},#{eventType},#{name},#{inputcode},#{url},#{sort},#{msgId},#{parentid},#{gid},#{createtime} )
+    </insert>
+
+    <update id="update" parameterType="com.pk.server.wechat.cms.domain.AccountMenu" flushCache="true">
+        UPDATE t_wxcms_account_menu SET MTYPE = #{mtype},NAME = #{name},INPUTCODE = #{inputcode},URL = #{url},SORT =
+        #{sort},PARENTID = #{parentid},CREATETIME = #{createtime} WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="com.pk.server.wechat.cms.domain.AccountMenu">
+        DELETE FROM t_wxcms_account_menu WHERE ID = #{id}
+    </delete>
+
+</mapper>

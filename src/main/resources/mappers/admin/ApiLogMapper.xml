@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.pk.server.admin.mapper.ApiLogDao">
+
+    <select id="findAll" resultType="com.pk.server.admin.model.ApiLog">
+        select id ,url ,param,setimemillis ,returnCode ,message ,issuccess ,fromSource ,ip ,method
+        from api_log
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="isSuccess!=null">
+                and isSuccess = #{isSuccess}
+            </if>
+            <if test="fromSource!=null">
+                and fromSource = #{fromSource}
+            </if>
+        </trim>
+        order by createTime desc
+    </select>
+
+    <select id="one" resultType="java.util.HashMap">
+        select count(id) as num ,fromSource from api_log group by fromSource ;
+    </select>
+
+    <select id="two" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT DATE_FORMAT(createtime,"%Y-%m-%d") as date,COUNT(method) as countValue
+        FROM
+        api_log where DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(createtime)
+        GROUP BY DATE_FORMAT(createtime,"%Y-%m-%d"),method HAVING method=#{method}
+    </select>
+
+    <select id="three" resultType="java.util.HashMap">
+        SELECT url as legendData ,count(url) as seriesData FROM api_log where
+        DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(createtime) and url is not null GROUP BY url;
+    </select>
+
+    <!-- key -->
+    <sql id="key">
+        <!-- 去掉最后一个, -->
+        <trim suffixOverrides=",">
+            id,
+            <if test="url!=null">
+                url,
+            </if>
+            <if test="param!=null">
+                param,
+            </if>
+            <if test="startTimeMillis!=null">
+                startTimeMillis,
+            </if>
+            <if test="endTimeMillis!=null">
+                endTimeMillis,
+            </if>
+            <if test="seTimeMillis!=null">
+                seTimeMillis,
+            </if>
+            <if test="returnCode!=null">
+                returnCode,
+            </if>
+            <if test="message!=null">
+                message,
+            </if>
+            <if test="isSuccess!=null">
+                isSuccess,
+            </if>
+            <if test="fromSource!=null">
+                fromSource,
+            </if>
+            <if test="ip!=null">
+                ip,
+            </if>
+            <if test="method!=null">
+                method,
+            </if>
+            createTime,
+        </trim>
+    </sql>
+    <!-- value -->
+    <sql id="value">
+        <!-- 去掉最后一个, -->
+        <trim suffixOverrides=",">
+            #{id},
+            <if test="url!=null">
+                #{url},
+            </if>
+            <if test="param!=null">
+                #{param},
+            </if>
+            <if test="startTimeMillis!=null">
+                #{startTimeMillis},
+            </if>
+            <if test="endTimeMillis!=null">
+                #{endTimeMillis},
+            </if>
+            <if test="seTimeMillis!=null">
+                #{seTimeMillis},
+            </if>
+            <if test="returnCode!=null">
+                #{returnCode},
+            </if>
+            <if test="message!=null">
+                #{message},
+            </if>
+            <if test="isSuccess!=null">
+                #{isSuccess},
+            </if>
+            <if test="fromSource!=null">
+                #{fromSource},
+            </if>
+            <if test="ip!=null">
+                #{ip},
+            </if>
+            <if test="method!=null">
+                #{method},
+            </if>
+            now(),
+        </trim>
+    </sql>
+
+    <insert id="save" parameterType="com.pk.server.admin.model.ApiLog" useGeneratedKeys="true">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+        insert into api_log (
+        <include refid="key"/>
+        ) values (<include refid="value"/>)
+    </insert>
+
+    <delete id="delete">
+        delete from api_log where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.pk.server.admin.model.ApiLog">
+        update api_log
+        <trim prefix="set" suffixOverrides=",">
+            <if test="url!=null">url = #{url},</if>
+            <if test="param!=null">param = #{param},</if>
+            <if test="startTimeMillis!=null">startTimeMillis = #{startTimeMillis},</if>
+            <if test="endTimeMillis!=null">endTimeMillis = #{endTimeMillis},</if>
+            <if test="seTimeMillis!=null">seTimeMillis = #{seTimeMillis},</if>
+            <if test="returnCode!=null">returnCode = #{returnCode},</if>
+            <if test="message!=null">message = #{message},</if>
+            <if test="isSuccess!=null">isSuccess = #{isSuccess},</if>
+            <if test="fromSource!=null">fromSource = #{fromSource},</if>
+            <if test="ip!=null">ip = #{ip},</if>
+            <if test="method!=null">method = #{method},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+</mapper>

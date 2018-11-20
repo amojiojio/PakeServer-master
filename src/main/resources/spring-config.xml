@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/mvc
+          http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 默认的注解映射的支持 -->
+    <context:component-scan base-package="com.pk.server"/>
+    <context:annotation-config />
+
+    <!-- 针对 Responsebody 转码 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.pk.server.wechat.core.util.UTF8StringHttpMessageConverter" />
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+    <context:annotation-config/>
+    <!-- 自动切入 开启切面注解-->
+    <aop:aspectj-autoproxy/>
+    <!-- 加载配置属性文件 -->
+    <context:property-placeholder location="classpath:*.properties"/>
+    <!-- 加载redis配置文件 -->
+    <import resource="spring-redis.xml"/>
+
+    <!-- dataSource配置 -->
+
+    <!--创建数据源1，连接数据库dbUser -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${datasource.url}"/>
+        <property name="username" value="${datasource.username}"/>
+        <property name="password" value="${datasource.password}"/>
+        <property name="filters" value="stat"/>
+        <property name="maxActive" value="30"/>
+        <property name="initialSize" value="5"/>
+        <property name="maxWait" value="60000"/>
+        <property name="minIdle" value="1"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="50"/>
+    </bean>
+
+    <!-- Spring 整合 mybatis -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- mybatis配置文件 可不加载 -->
+        <property name="configLocation" value="classpath:mybaits-config.xml"/>
+        <!-- mapper 映射文件位置 -->
+        <property name="mapperLocations" value="classpath*:mappers/**/*.xml"/>
+    </bean>
+    <!-- mapper文件自动扫描抓取 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.pk.server.**.mapper"/>
+    </bean>
+    <!-- sqlSession -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+    </bean>
+    <!-- 配置数据库事务 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 开启注解式事务扫描 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <!-- 拦截器配置 -->
+    <mvc:interceptors>
+        <!-- 派客后台登录拦截 -->
+        <mvc:interceptor>
+            <!-- 需拦截的地址 -->
+            <mvc:mapping path="/admin/**"/>
+            <!-- 需排除拦截的地址 -->
+            <mvc:exclude-mapping path="/admin/login"/>
+            <mvc:exclude-mapping path="/wxapi/**"/>
+            <bean class="com.pk.server.admin.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+
+        <!-- 微信OAuth2的拦截器-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**/weChat/*"/>-->
+            <!--<bean class="com.pk.server.wechat.api.interceptor.WxOAuth2Interceptor"/>-->
+        <!--</mvc:interceptor>-->
+
+    </mvc:interceptors>
+
+    <!-- 服务器启动时自动加载，目前主要提取加载需要缓存的公众号信息 -->
+    <bean id="appServiceImpl" class="com.pk.server.wechat.cms.AppDefineInitService"></bean>
+    <bean id="beanDefineConfigue" class="com.pk.server.wechat.core.spring.SpringBeanDefineConfigue">
+        <property name="appService" ref="appServiceImpl"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://10.20.91.130/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pk.server.app.mapper.IUserAddressDao">
+
+    <insert id="save" parameterType="com.pk.server.app.model.UserAddress">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+        INSERT INTO pake_run (
+        id,
+        openId,
+        goodsType,
+        note,
+        startUserNote,
+        endUserNote,
+        endUserName,
+        endPhone,
+        goodsMoney,
+        sendType,
+        isSubscribe,
+        subscribeTime,
+        state,
+        payState,
+        createDate
+        )
+        VALUES (
+        #{id},
+        #{openId},
+        #{goodsType},
+        #{note},
+        #{startUserNote},
+        #{endUserNote},
+        #{endUserName},
+        #{endPhone},
+        #{goodsMoney},
+        #{sendType},
+        #{isSubscribe},
+        #{subscribeTime},
+        #{state},
+        #{payState},
+        now()
+        );
+    </insert>
+
+</mapper>

@@ -1,0 +1,693 @@
+.liji {
+    width: 3.3333333rem;
+    height: 1.06666667rem;
+    line-height: 1.09333333rem;
+    margin: 0 auto;
+    background: #ff8b03;
+    -webkit-border-radius: 0.08rem;
+    border-radius: 0.08rem;
+    color: #fff;
+    font-size: 0.37333333rem;
+    float: left;
+}
+
+.android-ics.light .dwwo {
+    background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), color-stop(0.48, rgba(255, 255, 255, 0)), color-stop(0.52, rgba(255, 255, 255, 0)), to(#ffffff));
+}
+
+.android-ics.light .dw {
+    background: #fff;
+}
+
+.android-ics .dwwl {
+    margin: 0;
+}
+
+.android-ics .dw .dwwol {
+    width: 100%;
+    left: 0;
+    height: 57px;
+    border-top: 1px solid #a1a1a1;
+    border-bottom: 1px solid #a1a1a1;
+    margin-top: -30px;
+    display: block;
+}
+
+.android-ics .dwhl {
+    padding: 0;
+}
+
+.android-ics .dww {
+    margin: 0;
+}
+
+.android-ics .dwwl.dwrc.dwwl0 {
+    display: none;
+    margin: 0;
+}
+
+.android-ics .dwwl.dwrc.dwwl0 .dw-bf .dw-li {
+    text-align: left;
+    padding-left: 0.32rem;
+}
+
+.android-ics .dwwl.dwrc.dwwl1 {
+    display: none;
+    margin: 0;
+}
+
+.android-ics .dwwl.dwrc.dwwl1 .dw-bf .dw-li {
+    text-align: left;
+    padding-left: 0.32rem;
+}
+
+.android-ics .dwwl.dwrc.dwwl2 {
+    margin: 0;
+}
+
+.android-ics .dwwl.dwrc.dwwl2 .dw-bf .dw-li {
+    text-align: left;
+    padding-left: 0.32rem;
+}
+
+.android-ics .dwwl.dwrc.dwwl4 {
+    margin: 0;
+}
+
+.android-ics .dwwl.dwrc.dwwl4 .dw-bf .dw-li {
+    text-align: right;
+    padding-right: 0.32rem;
+}
+
+.android-ics .dwwl.dwrc.dwwl5 {
+    display: none;
+}
+
+.android-ics .dwl {
+    display: none;
+}
+
+.android-ics .dwwl.dwrc .dw-li {
+    font-weight: normal;
+    color: #000;
+    font-size: 14px;
+}
+
+.android-ics .dwwc.dwrc {
+    padding: 0;
+}
+
+.android-ics .dw.dwbg {
+    width: 82%;
+    -webkit-border-radius: 0.16rem;
+    border-radius: 0.16rem;
+    overflow: hidden;
+}
+
+.android-ics .dw-li .dw-i {
+    opacity: 0;
+}
+
+.android-ics .dw-li.dw-v .dw-i {
+    opacity: 1;
+}
+
+.android-ics .dww .dw-li.dw-hl {
+    background: rgba(0, 0, 0, 0);
+}
+
+.android-ics .dwbw.dwb-c {
+    position: absolute;
+    display: inline-block;
+    width: 1.3333333333333333rem;
+    height: 1.3333333333333333rem;
+    float: left;
+    z-index: 5;
+    top: 0;
+    right: 0;
+}
+
+.android-ics .dwbw.dwb-c .dwb {
+    width: 1.3333333333333333rem;
+    height: 1.3333333333333333rem;
+    background-image: url(../images/goodsClose.png);
+    background-size: 0.4266666666666667rem 0.4266666666666667rem;
+    background-position: center center;
+    background-repeat: no-repeat;
+    top: 0;
+    right: 0;
+}
+
+.android-ics .addDiv {
+    margin-top: 1.1733333333333333rem;
+}
+
+.android-ics .addDiv .pic_time {
+    width: 100%;
+}
+
+.android-ics .addDiv .pic_time img {
+    width: 1.2266666666666666rem;
+    height: 1.2266666666666666rem;
+    margin: 0 auto;
+}
+
+.android-ics .addDiv p {
+    color: #000;
+    font-size: 0.4266666666666667rem;
+    margin: 0.5333333333333333rem 0 0.26666666666666666rem;
+}
+
+.android-ics.light .dwbc {
+    border-top: none;
+}
+
+.android-ics.light .dwbc .dwbw.dwb-s {
+    width: 100%;
+    padding: 0.8rem 0.6133333333333333rem 0.6666666666666666rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.android-ics.light .dwbc .dwbw.dwb-s .dwb {
+    float: right;
+    width: 3.3333333333333335rem;
+    height: 1.0666666666666667rem;
+    line-height: 1.0933333333333333rem;
+    margin: 0 auto;
+    background: #ff8b03;
+    -webkit-border-radius: 0.08rem;
+    border-radius: 0.08rem;
+    color: #fff;
+    font-size: 0.37333333333333335rem;
+}
+
+.android-ics.light .dwb-s .dwb {
+    border-right: none;
+}
+
+.android-ics .dw .dwb-a {
+    background-color: #fff;
+}
+
+.android-ics .dwc {
+    padding: 0;
+}
+
+.select_time .dwsc .dww {
+    color: #2d2d2d;
+    margin: 0;
+    background: transparent;
+}
+
+.select_time .dwsc .dwwl {
+    background: transparent;
+    margin: 0;
+}
+
+.select_time .dwwo {
+    position: absolute;
+    z-index: 3;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), color-stop(0.48, rgba(255, 255, 255, 0)), color-stop(0.52, rgba(255, 255, 255, 0)), to(#ffffff));
+}
+
+.select_time .dw.dwbg {
+    width: 82%;
+    -webkit-border-radius: 0.16rem;
+    border-radius: 0.16rem;
+    overflow: hidden;
+    margin-top: -2.6rem;
+}
+
+.select_time .dwwr {
+    padding: 1.1733333333333333rem 0 0;
+}
+
+.select_time .dwwc {
+    padding: 0;
+    background: #fff;
+}
+
+.select_time .dw .dwwol {
+    width: 100%;
+    left: 0;
+    height: 1.2533333333333334rem;
+    border-top: 1px solid #a1a1a1;
+    border-bottom: 1px solid #a1a1a1;
+    margin-top: -0.6666666666666666rem;
+    display: block;
+}
+
+.select_time .dw-li {
+    padding: 0 5px;
+    display: block;
+    text-align: center;
+    line-height: 0.6666666666666666rem;
+    font-size: 0.3466666666666667rem;
+    white-space: nowrap;
+    text-shadow: none;
+    vertical-align: bottom;
+    opacity: 1;
+    filter: 0;
+}
+
+.select_time .dwbg .dwbw.dwb-s {
+    background: #fff;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 0.5866666666666667rem;
+}
+
+.select_time .dwbg .dwbw.dwb-s .dwb {
+    width: 80%;
+    overflow: hidden;
+    display: block;
+    height: 1.0666666666666667rem;
+    line-height: 1.12rem;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 0.37333333333333335rem;
+    font-weight: normal;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 0.10666666666666667rem;
+    box-shadow: none;
+    color: #fff;
+    background: #000;
+    background: #ff8b03;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-box-shadow: none;
+    -webkit-border-radius: 0.10666666666666667rem;
+}
+
+.select_time .dwbg .dwbw.dwb-c {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #fff;
+    width: 1.3333333333333333rem;
+    height: 1.3333333333333333rem;
+    margin: 0 auto;
+}
+
+.select_time .dwbg .dwbw.dwb-c .dwb {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 0.37333333333333335rem;
+    font-weight: normal;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: #fff;
+    background-image: url(../images/goodsClose.png);
+    background-size: 0.4266666666666667rem 0.4266666666666667rem;
+    background-position: center center;
+    background-repeat: no-repeat;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-box-shadow: none;
+    -webkit-border-radius: 0;
+}
+
+.select_time .dwv1 {
+    border: none;
+    width: 100%;
+    background-image: url(/resource/wechat/images/pic_time.png);
+    background-size: 1.2266666666666666rem 1.2266666666666666rem;
+    background-repeat: no-repeat;
+    background-position: center top;
+    padding-top: 1.6rem;
+    padding-bottom: 1.0666666666666667rem;
+    font-size: 0.4rem;
+    color: 000;
+}
+
+.select_time .dwl {
+    font-size: 0.4266666666666667rem;
+}
+
+.select_time .dwc {
+    margin: 0;
+}
+
+.select_time .dwbc {
+    padding-top: 40px;
+}
+
+.select_time .dwsc .dww {
+    min-width: 80px !important;
+}
+
+#howLong {
+    display: none;
+}
+
+.insurance .dwsc .dww {
+    color: #2d2d2d;
+    margin: 0;
+    background: transparent;
+}
+
+.insurance .dwsc .dwwl {
+    background: transparent;
+    margin: 0;
+}
+
+.insurance .dwwo {
+    position: absolute;
+    z-index: 3;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), color-stop(0.48, rgba(255, 255, 255, 0)), color-stop(0.52, rgba(255, 255, 255, 0)), to(#ffffff));
+}
+
+.insurance .dw.dwbg {
+    width: 82%;
+    -webkit-border-radius: 0.16rem;
+    border-radius: 0.16rem;
+    overflow: hidden;
+}
+
+.insurance .dwwr {
+    padding: 1.1733333333333333rem 0 0;
+}
+
+.insurance .dwwl.dwrc.dwwl0 .dww {
+    width: 6.666666666666667rem;
+}
+
+.insurance .dwwc {
+    padding: 0;
+    background: #fff;
+}
+
+.insurance .dw .dwwol {
+    width: 100%;
+    left: 0;
+    height: 70px;
+    border-top: 1px solid #a1a1a1;
+    border-bottom: 1px solid #a1a1a1;
+    margin-top: -48px;
+    display: block;
+}
+
+.insurance .dw-li {
+    padding: 0 5px;
+    display: block;
+    text-align: center;
+    line-height: 0.6666666666666666rem;
+    font-size: 0.3466666666666667rem;
+    white-space: nowrap;
+    text-shadow: none;
+    vertical-align: bottom;
+    opacity: 1;
+    filter: 0;
+}
+
+.insurance .dwbg .dwbw.dwb-s {
+    background: #fff;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 0.5866666666666667rem;
+}
+
+.insurance .dwbg .dwbw.dwb-s .dwb {
+    width: 80%;
+    overflow: hidden;
+    display: block;
+    height: 1.0666666666666667rem;
+    line-height: 1.12rem;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 0.37333333333333335rem;
+    font-weight: normal;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 0.10666666666666667rem;
+    box-shadow: none;
+    color: #fff;
+    background: #000;
+    background: #ff8b03;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-box-shadow: none;
+    -webkit-border-radius: 0.10666666666666667rem;
+}
+
+.insurance .dwbg .dwbw.dwb-c {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #fff;
+    width: 1.3333333333333333rem;
+    height: 1.3333333333333333rem;
+    margin: 0 auto;
+}
+
+.insurance .dwbg .dwbw.dwb-c .dwb {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 0.37333333333333335rem;
+    font-weight: normal;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: #fff;
+    background-image: url(../images/goodsClose.png);
+    background-size: 0.4266666666666667rem 0.4266666666666667rem;
+    background-position: center center;
+    background-repeat: no-repeat;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-box-shadow: none;
+    -webkit-border-radius: 0;
+}
+
+.insurance .dwv {
+    border: none;
+    width: 100%;
+    height: 1.3333333333333333rem;
+    background-image: url(../images/pic_charge.png);
+    background-size: 1.2266666666666666rem 1.2266666666666666rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.insurance .dwl {
+    font-size: 0.4266666666666667rem;
+}
+
+.insurance .dw-li.dw-v .dw-i p {
+    color: #444;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.insurance .dw-li.dw-v .dw-i .p1 {
+    font-size: 14px;
+}
+
+.insurance .dw-li.dw-v .dw-i .p2 {
+    font-size: 12px;
+}
+
+.insurance .iagreen {
+    padding-top: 8px;
+    font-size: 10px;
+    color: #b0b0b0;
+    line-height: 14px;
+    position: relative;
+}
+
+.insurance .iagreen .agree_pic {
+    display: inline-block;
+    width: 11px;
+    height: 14px;
+    background-image: url(../images/iagreen.png);
+    background-repeat: no-repeat;
+    background-size: 11px 11px;
+    background-position: left 4px;
+    margin-right: 4px;
+}
+
+.insurance .iagreen a {
+    color: #ffbf73;
+    text-decoration: underline;
+}
+
+.add_time .dwsc .dww {
+    color: #2d2d2d;
+    margin: 0;
+    background: transparent;
+}
+
+.add_time .dwsc .dwwl {
+    background: transparent;
+    margin: 0;
+}
+
+.add_time .dwwo {
+    position: absolute;
+    z-index: 3;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#ffffff), color-stop(0.48, rgba(255, 255, 255, 0)), color-stop(0.52, rgba(255, 255, 255, 0)), to(#ffffff));
+}
+
+.add_time .dw.dwbg {
+    width: 82%;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: -5em;
+}
+
+.add_time .dwwr {
+    padding: 1.2em 0 0;
+}
+
+.add_time .dwwc {
+    padding: 0;
+    background: #fff;
+}
+
+.add_time .dw .dwwol {
+    width: 100%;
+    left: 0;
+    height: 50px;
+    border-top: 1px solid #a1a1a1;
+    border-bottom: 1px solid #a1a1a1;
+    margin-top: -25px;
+    display: block;
+}
+
+.add_time .dw-li {
+    padding: 0 5px;
+    display: block;
+    text-align: center;
+    line-height: 1.2em;
+    font-size: 1.2em;
+    white-space: nowrap;
+    text-shadow: none;
+    vertical-align: bottom;
+    opacity: 1;
+    filter: 0;
+}
+
+.add_time .dwbg .dwbw.dwb-s {
+    background: #fff;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 1.6em;
+}
+
+.add_time .dwbg .dwbw.dwb-s .dwb {
+    width: 80%;
+    overflow: hidden;
+    display: block;
+    height: 3em;
+    line-height: 3em;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 1em;
+    font-weight: normal;
+    text-decoration: none;
+    text-shadow: none;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #fff;
+    background: #000;
+    background: #ff8b03;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-box-shadow: none;
+}
+
+.add_time .dwbg .dwbw.dwb-c {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #fff;
+    width: 4em;
+    height: 4em;
+    margin: 0 auto;
+}
+
+.add_time .dwbg .dwbw.dwb-c .dwb {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 1.2em;
+    font-weight: normal;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: #fff;
+    background-image: url(../images/goodsClose.png);
+    background-size: 1.2em 1.2em;
+    background-position: center center;
+    background-repeat: no-repeat;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-box-shadow: none;
+    -webkit-border-radius: 0;
+}
+
+.add_time .dwv1 {
+    border: none;
+    width: 100%;
+    background-image: url(/resource/wechat/images/pic_time.png);
+    background-size: 3.4em 3.4em;
+    background-repeat: no-repeat;
+    background-position: center 1em;
+    padding-top: 6em;
+    padding-bottom: 1em;
+}
+
+.add_time .dwv1 .text {
+    font-size: 1.2em;
+    color: 000;
+    font-weight: bold;
+}
+
+.add_time .dwl {
+    font-size: 1em;
+}
+
+.add_time .dwc {
+    margin: 0;
+}
+
+.add_time .dwbc {
+    padding-top: 30px;
+}
+
+
+/*# sourceMappingURL=time_plug.css.map */
